@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: book-catalog
+  name: book-catalog-deployment
 spec:
   replicas: 1
   selector:
@@ -14,20 +14,33 @@ spec:
     spec:
       containers:
       - name: book-catalog
-        image: sit722asn.azurecr.io/book-catalog:1
+        image: sit722asn.azurecr.io/book_catalog:v1
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
         env:
-        - name: PORT
-          value: "8000"
         - name: DATABASE_URL
-          value: postgresql://sit722_icdp_user:gKkEmcjvzFXgr2AJwkkGmSbENzWQpl8J@dpg-cs0tnbe8ii6s73ctnaig-a.oregon-postgres.render.com/sit722_icdp?sslmode=require
-
+          value: "postgresql://sit722_k8g1_user:DwhykqXbtbSk5dJEVKpgg2f5V4NnPeD8@dpg-cs191hq3esus739c798g-a.singapore-postgres.render.com/sit722_k8g1"
+        command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+        workingDir: "/app"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-catalog-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: book-catalog
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: inventory-management
+  name: inventory-management-deployment
 spec:
   replicas: 1
   selector:
@@ -40,11 +53,25 @@ spec:
     spec:
       containers:
       - name: inventory-management
-        image: sit722asn.azurecr.io/inventory_management:1
+        image: sit722asn.azurecr.io/book_catalog:v1
+        imagePullPolicy: Always
         ports:
-        - containerPort: 8001
+        - containerPort: 8000
         env:
-        - name: PORT
-          value: "8001"
         - name: DATABASE_URL
-          value: postgresql://sit722_icdp_user:gKkEmcjvzFXgr2AJwkkGmSbENzWQpl8J@dpg-cs0tnbe8ii6s73ctnaig-a.oregon-postgres.render.com/sit722_icdp?sslmode=require
+          value: "postgresql://sit722_k8g1_user:DwhykqXbtbSk5dJEVKpgg2f5V4NnPeD8@dpg-cs191hq3esus739c798g-a.singapore-postgres.render.com/sit722_k8g1"
+        command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+        workingDir: "/app"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-management-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: inventory-management
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
