@@ -1,27 +1,26 @@
-version: "3"
 services:
   book-catalog:
-    image: book-catalog
+    image: sit722asn.azurecr.io/book-catalog:1
     build:
       context: ./book_catalog
       dockerfile: Dockerfile
     container_name: book-catalog
     ports:
-      - "8010:8010"
+      - "8000:8000"
     environment:
-      - PORT=8011
+      - PORT=8000
       - DATABASE_URL=postgresql://sit722_icdp_user:gKkEmcjvzFXgr2AJwkkGmSbENzWQpl8J@dpg-cs0tnbe8ii6s73ctnaig-a.oregon-postgres.render.com/sit722_icdp
     restart: "no"
 
-  inventory-management:
-    image: inventory-management
+  inventory_management:
+    image: sit722asn.azurecr.io/inventory_management:1
     build:
       context: ./inventory_management
       dockerfile: Dockerfile
-    container_name: inventory-management
+    container_name: inventory_management
     ports:
-      - "8012:8012"
+      - "8001:8001"
     environment:
-      - PORT=8012
+      - PORT=8001
       - DATABASE_URL=postgresql://sit722_icdp_user:gKkEmcjvzFXgr2AJwkkGmSbENzWQpl8J@dpg-cs0tnbe8ii6s73ctnaig-a.oregon-postgres.render.com/sit722_icdp
     restart: "no"
