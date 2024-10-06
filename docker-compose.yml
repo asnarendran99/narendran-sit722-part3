@@ -10,7 +10,7 @@ services:
       - "8010:8010"
     environment:
       - PORT=8011
-      - DATABASE_URL=postgresql://part3_9s6m_user:eFkkxKo31o996A8tioQNMWCny4SyJHbW@dpg-cra8795ds78s73cqccf0-a.oregon-postgres.render.com/part3_9s6m
+      - DATABASE_URL=postgresql://sit722_icdp_user:gKkEmcjvzFXgr2AJwkkGmSbENzWQpl8J@dpg-cs0tnbe8ii6s73ctnaig-a.oregon-postgres.render.com/sit722_icdp
     restart: "no"
 
   inventory-management:
