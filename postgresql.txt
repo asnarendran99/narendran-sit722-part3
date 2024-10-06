@@ -1,0 +1,4 @@
+PORT = 5432
+Database = sit722_icdp
+Username = sit722_icdp_user
+DATABASE_URL = postgresql://sit722_icdp_user:gKkEmcjvzFXgr2AJwkkGmSbENzWQpl8J@dpg-cs0tnbe8ii6s73ctnaig-a.oregon-postgres.render.com/sit722_icdp
